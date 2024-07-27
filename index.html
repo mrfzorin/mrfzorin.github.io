@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AR.js with QR Code and Transparent Video</title>
+  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+  <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.7.6/aframe/build/aframe-ar.js"></script>
+</head>
+<body style="margin: 0; overflow: hidden;">
+<a-scene embedded arjs>
+  <a-marker type="pattern" url="assets/your-qr-pattern-file.patt">
+    <a-entity position="0 1 0">
+      <a-video src="assets/your-transparent-video.webm" width="4" height="2.25" position="0 0.5 0" rotation="-90 0 0" transparent="true" autoplay="true" loop="true" crossorigin="anonymous">
+      </a-video>
+    </a-entity>
+  </a-marker>
+  <a-entity camera></a-entity>
+</a-scene>
+</body>
+</html>

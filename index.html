@@ -1,49 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MindAR with Video</title>
-    <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/dist/mindar-image.prod.js"></script>
-    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-</head>
-<body>
-    <div id="ar-container"></div>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+  </head>
+  <body>
+    <a-scene mindar-image="imageTargetSrc: ./assets/targets.mind" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+      <a-assets>
+        <video id="video" src="./assets/your-transparent-video.webm"></video>
+        <img id="card" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/image-tracking/assets/card-example/card.png">
+        <a-asset-item id="avatarModel" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/image-tracking/assets/card-example/softmind/scene.gltf"></a-asset-item>
+      </a-assets>
 
-    <script>
-        // Создание MindAR сцены
-        const mindarThree = new window.MINDAR.Three({
-            container: document.querySelector("#ar-container"),
-            imageTargetSrc: './assets/targets.mind', // Замените на ваш файл с маркером
-        });
+      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+      <a-entity mindar-image-target="targetIndex: 0">
 
-        const { renderer, scene, camera } = mindarThree;
-
-        // Добавление видео
-        const video = document.createElement('video');
-        video.src = './assets/your-transparent-video.webm'; // Замените на ваш путь к видео
-        video.loop = true;
-        video.muted = false;
-        video.play();
-
-        // Создание текстуры из видео
-        const videoTexture = new THREE.VideoTexture(video);
-
-        // Создание плоскости для отображения видео
-        const geometry = new THREE.PlaneGeometry(1, 0.56); // Пропорции плоскости (ширина x высота)
-        const material = new THREE.MeshBasicMaterial({ map: videoTexture });
-        const videoMesh = new THREE.Mesh(geometry, material);
-
-        // Расположение видео над маркером
-        videoMesh.position.set(0, 0.5, 0); // 0.5 по оси Y задаёт расстояние над маркером
-
-        // Создание привязки к маркеру
-        const anchor = mindarThree.addAnchor(0);
-        anchor.group.add(videoMesh);
-
-        // Запуск MindAR сцены
-        mindarThree.start();
-    </script>
-</body>
+        <a-plane src="#video" position="0 0 0" height="0.552" width="1" rotation="0 0 0"></a-plane>
+        
+      </a-entity>
+    </a-scene>
+  </body>
 </html>

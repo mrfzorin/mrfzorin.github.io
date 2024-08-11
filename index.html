@@ -19,17 +19,23 @@
       </a-entity>
     </a-scene>
  
-<script>
+    <script>
       document.addEventListener("DOMContentLoaded", function () {
         const video = document.querySelector("#video");
-        
-        // Для мобильных устройств, воспроизведение должно происходить после пользовательского взаимодействия
-        window.addEventListener('click', function() {
+        const mindarScene = document.querySelector('a-scene');
+
+        mindarScene.addEventListener('targetFound', function() {
           if (video.paused) {
             video.play();
+          }
+        });
+
+        mindarScene.addEventListener('targetLost', function() {
+          if (!video.paused) {
+            video.pause();
           }
         });
       });
     </script>
   </body>
-</html> 
+</html>
